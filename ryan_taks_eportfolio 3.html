@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ryan Taks | ENC 2135 ePortfolio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #222; background: #fff; }
+
+  /* NAV */
+  nav {
+    background: #782F40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    color: #CEB888;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Georgia, serif;
+  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: Georgia, serif;
+    transition: background 0.15s;
+  }
+  .nav-links button:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .nav-links button.active { color: #CEB888; font-weight: bold; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HOME HERO */
+  .hero {
+    background: #782F40;
+    color: #fff;
+    padding: 4rem 3rem 3.5rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    min-height: 380px;
+  }
+  .hero-text { flex: 1; }
+  .hero h1 { font-size: 40px; font-weight: bold; color: #CEB888; margin-bottom: 0.4rem; font-family: Georgia, serif; }
+  .hero h2 { font-size: 20px; font-weight: normal; color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; font-family: Georgia, serif; }
+  .hero p { font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.88); max-width: 540px; margin-bottom: 0.75rem; }
+  .hero-email { margin-top: 1.5rem; font-size: 14px; color: #CEB888; }
+  .hero-email a { color: #CEB888; }
+  .hero-photo {
+    width: 210px;
+    height: 290px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #5a1f2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #CEB888;
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-placeholder {
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    text-align: center;
+    padding: 1rem;
+    font-family: Georgia, serif;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: #782F40;
+    padding: 2.5rem 3rem 2rem;
+    border-bottom: 3px solid #CEB888;
+  }
+  .page-header h1 { font-size: 26px; font-weight: bold; color: #CEB888; font-family: Georgia, serif; }
+  .page-header p { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 5px; font-family: Georgia, serif; }
+
+  /* CONTENT */
+  .content { padding: 2.5rem 3rem; }
+  .content-inner { max-width: 800px; margin: 0 auto; }
+
+  /* ARTIFACT CARDS */
+  .artifact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) { .artifact-grid { grid-template-columns: 1fr; } }
+  .artifact-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fafafa;
+  }
+  .artifact-img {
+    height: 180px;
+    background: #d4a0a8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .artifact-img.blue { background: #a8c4d4; }
+  .artifact-body { padding: 1rem 1.25rem; }
+  .artifact-body .date { font-size: 12px; color: #888; margin-bottom: 4px; font-family: Georgia, serif; }
+  .artifact-body h3 { font-size: 15px; font-weight: bold; margin-bottom: 4px; font-family: Georgia, serif; }
+  .artifact-body .type { font-size: 12px; color: #888; font-family: Georgia, serif; }
+  .read-btn {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #782F40;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: Georgia, serif;
+    padding: 0;
+  }
+  .read-btn:hover { color: #5a1f2e; }
+
+  .comparison-box {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .comparison-box h3 { font-size: 17px; font-weight: bold; margin-bottom: 0.75rem; font-family: Georgia, serif; }
+  .comparison-box p { font-size: 14px; line-height: 1.85; color: #444; font-family: Georgia, serif; }
+
+  /* CV */
+  .cv-name { font-size: 24px; font-weight: bold; margin-bottom: 4px; font-family: Georgia, serif; }
+  .cv-subtitle { font-size: 15px; color: #555; margin-bottom: 4px; font-family: Georgia, serif; }
+  .cv-email { font-size: 13px; color: #782F40; margin-bottom: 1.5rem; display: block; }
+  .cv-section { margin-bottom: 2rem; }
+  .cv-section h3 {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #782F40;
+    border-bottom: 1.5px solid #CEB888;
+    padding-bottom: 6px;
+    margin-bottom: 1rem;
+    font-family: Georgia, serif;
+  }
+  .cv-item { margin-bottom: 1.25rem; }
+  .cv-item-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+  .cv-item-title { font-size: 15px; font-weight: bold; font-family: Georgia, serif; }
+  .cv-item-date { font-size: 12px; color: #777; font-family: Georgia, serif; }
+  .cv-item-sub { font-size: 13px; color: #666; margin-bottom: 6px; font-style: italic; font-family: Georgia, serif; }
+  .cv-item ul { padding-left: 1.25rem; }
+  .cv-item ul li { font-size: 13px; line-height: 1.85; color: #444; font-family: Georgia, serif; }
+
+  /* PROJECT 1 */
+  .project-layout { display: grid; grid-template-columns: 1fr 200px; gap: 2rem; align-items: start; }
+  @media (max-width: 600px) { .project-layout { grid-template-columns: 1fr; } .project-img { display: none; } }
+  .project-img {
+    background: #d4a0a8;
+    border-radius: 8px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .project-date { font-size: 13px; color: #888; margin-bottom: 1rem; font-family: Georgia, serif; }
+  .project-intro { font-size: 14px; line-height: 1.85; color: #444; margin-bottom: 1.5rem; font-family: Georgia, serif; }
+  .project-excerpt {
+    font-size: 14px;
+    line-height: 1.85;
+    border-left: 3px solid #CEB888;
+    padding-left: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+    font-style: italic;
+    font-family: Georgia, serif;
+  }
+  .open-btn {
+    display: inline-block;
+    padding: 9px 22px;
+    background: #782F40;
+    color: #CEB888;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .open-btn:hover { background: #6a2538; }
+
+  /* REFLECTION */
+  .reflection-banner {
+    width: 100%;
+    height: 280px;
+    background: #782F40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .reflection-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+  .reflection-body h2 { font-size: 26px; font-weight: bold; margin-bottom: 0.4rem; font-family: Georgia, serif; }
+  .reflection-body h3 { font-size: 17px; font-weight: bold; color: #782F40; margin: 1.5rem 0 0.5rem; font-family: Georgia, serif; }
+  .reflection-body p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 1rem; font-family: Georgia, serif; }
+
+  /* FOOTER */
+  footer {
+    background: #782F40;
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 1.25rem;
+    font-size: 12px;
+    margin-top: 3rem;
+    font-family: Georgia, serif;
+  }
+  footer span { color: #CEB888; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 620px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  }
+  .modal-header {
+    background: #782F40;
+    padding: 1rem 1.25rem;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+  }
+  .modal-header h3 { color: #CEB888; font-size: 15px; font-weight: bold; font-family: Georgia, serif; }
+  .modal-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { color: #fff; }
+  .modal-body { padding: 1.5rem; }
+  .modal-body .doc-type { font-size: 12px; color: #888; margin-bottom: 1rem; font-family: Georgia, serif; }
+  .modal-body p { font-size: 13px; line-height: 1.85; color: #444; margin-bottom: 0.75rem; font-family: Georgia, serif; }
+  .modal-body strong { font-weight: bold; color: #222; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand" onclick="showPage('home')">Ryan Taks</span>
+  <div class="nav-links">
+    <button onclick="showPage('home')" id="nav-home" class="active">Home</button>
+    <button onclick="showPage('artifacts')" id="nav-artifacts">Artifacts</button>
+    <button onclick="showPage('cv')" id="nav-cv">CV</button>
+    <button onclick="showPage('project1')" id="nav-project1">Project 1</button>
+    <button onclick="showPage('reflection')" id="nav-reflection">Reflection</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-text">
+      <h1>ENC 2135, Revised</h1>
+      <h2>Welcome!</h2>
+      <p>Hello, and welcome to my portfolio of writings from my time in ENC 2135 at FSU.</p>
+      <p>My name is Ryan Taks, and I am a freshman at Florida State University as of Spring 2026. While taking Research, Genre, and Context, my writing has developed into a more focused understanding of research methods, financial literacy discourse, and academic argumentation.</p>
+      <div class="hero-email">Email me at <a href="mailto:rat25@fsu.edu">rat25@fsu.edu</a></div>
+    </div>
+    <div class="hero-photo">
+      <!-- TO ADD YOUR PHOTO: replace the placeholder div below with:
+           <img src="YOUR_PHOTO_FILENAME.jpg" alt="Ryan Taks"> -->
+      <div class="photo-placeholder">Add your photo here</div>
+    </div>
+  </div>
+  <footer>©2026 by <span>Ryan Taks</span>. ENC 2135 ePortfolio — Florida State University.</footer>
+</div>
+
+<!-- ARTIFACTS -->
+<div id="page-artifacts" class="page">
+  <div class="page-header">
+    <h1>Artifacts</h1>
+    <p>Quantifying growth by comparing works</p>
+  </div>
+  <div class="content">
+    <div class="content-inner">
+      <div class="artifact-grid">
+        <div class="artifact-card">
+          <div class="artifact-img">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="8" width="48" height="48" rx="4" fill="rgba(120,47,64,0.25)"/>
+              <rect x="16" y="20" width="32" height="3" rx="1.5" fill="rgba(120,47,64,0.5)"/>
+              <rect x="16" y="28" width="32" height="3" rx="1.5" fill="rgba(120,47,64,0.5)"/>
+              <rect x="16" y="36" width="22" height="3" rx="1.5" fill="rgba(120,47,64,0.5)"/>
+            </svg>
+          </div>
+          <div class="artifact-body">
+            <div class="date">February 2026</div>
+            <h3>Annotated Bibliography</h3>
+            <div class="type">Research Writing</div>
+            <button class="read-btn" onclick="openModal('bib')">Read</button>
+          </div>
+        </div>
+        <div class="artifact-card">
+          <div class="artifact-img blue">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="14" width="16" height="36" rx="2" fill="rgba(24,95,165,0.3)"/>
+              <rect x="26" y="8" width="16" height="42" rx="2" fill="rgba(24,95,165,0.5)"/>
+              <rect x="44" y="16" width="12" height="34" rx="2" fill="rgba(24,95,165,0.3)"/>
+            </svg>
+          </div>
+          <div class="artifact-body">
+            <div class="date">Spring 2026</div>
+            <h3>Email to FSU Administration</h3>
+            <div class="type">Professional Writing</div>
+            <button class="read-btn" onclick="openModal('email')">Read</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-box">
+        <h3>Comparison</h3>
+        <p>The difference in writing across these two artifacts is meaningful. The annotated bibliography was an early research task — it required me to locate, summarize, and evaluate sources on college student financial behavior. Though foundational, it was primarily descriptive. The email to FSU administration represents a more developed application of that same research: it synthesizes the evidence into a persuasive argument for a real audience, requiring me to adapt my tone, structure, and purpose for a professional context. Together, they illustrate how research and communication are connected, and how my writing has grown to serve different genres and goals within the same subject matter.</p>
+      </div>
+    </div>
+  </div>
+  <footer>©2026 by <span>Ryan Taks</span>. ENC 2135 ePortfolio — Florida State University.</footer>
+</div>
+
+<!-- CV -->
+<div id="page-cv" class="page">
+  <div class="page-header">
+    <h1>CV</h1>
+  </div>
+  <div class="content">
+    <div class="content-inner">
+      <div class="cv-name">Ryan Taks</div>
+      <div class="cv-subtitle">Student at Florida State University &middot; Tallahassee, FL</div>
+      <a class="cv-email" href="mailto:rat25@fsu.edu">rat25@fsu.edu</a>
+
+      <div class="cv-section">
+        <h3>Skills</h3>
+        <p style="font-size:14px;line-height:1.85;color:#444;font-family:Georgia,serif;">Strong written communication, academic research and source analysis, customer service, time management, reliability, and adaptability in fast-paced environments.</p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Experience</h3>
+
+        <div class="cv-item">
+          <div class="cv-item-header">
+            <span class="cv-item-title">Azucar Ice Cream</span>
+            <span class="cv-item-date">2025 – Present</span>
+          </div>
+          <div class="cv-item-sub">Team Member</div>
+          <ul>
+            <li>Served customers in a high-traffic retail environment.</li>
+            <li>Maintained product displays and ensured cleanliness throughout the store.</li>
+            <li>Handled cash and card transactions with accuracy.</li>
+          </ul>
+        </div>
+
+        <div class="cv-item">
+          <div class="cv-item-header">
+            <span class="cv-item-title">Publix Super Markets</span>
+            <span class="cv-item-date">2023 – 2024</span>
+          </div>
+          <div class="cv-item-sub">Associate</div>
+          <ul>
+            <li>Assisted customers with product selection and store navigation.</li>
+            <li>Maintained clean and organized work areas to meet store standards.</li>
+            <li>Operated registers and handled transactions accurately.</li>
+            <li>Collaborated with team members during high-volume shifts.</li>
+          </ul>
+        </div>
+
+        <div class="cv-item">
+          <div class="cv-item-header">
+            <span class="cv-item-title">Private Childcare</span>
+            <span class="cv-item-date">2022 – Present</span>
+          </div>
+          <div class="cv-item-sub">Babysitter / Caregiver</div>
+          <ul>
+            <li>Provided attentive, responsible care for children of varying ages.</li>
+            <li>Managed schedules, meals, and activities independently.</li>
+            <li>Built trusted relationships with multiple families over time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h3>Education</h3>
+        <div class="cv-item">
+          <div class="cv-item-header">
+            <span class="cv-item-title">Florida State University</span>
+            <span class="cv-item-date">August 2025 – May 2029 (Expected)</span>
+          </div>
+          <div class="cv-item-sub">Bachelor of Arts — Political Science</div>
+          <ul>
+            <li>Currently enrolled as a freshman pursuing a degree in Political Science.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>©2026 by <span>Ryan Taks</span>. ENC 2135 ePortfolio — Florida State University.</footer>
+</div>
+
+<!-- PROJECT 1 -->
+<div id="page-project1" class="page">
+  <div class="page-header">
+    <h1>Project 1: Beyond Irresponsibility — Understanding the Complexity of College Student Financial Behavior</h1>
+    <p>February 13, 2026</p>
+  </div>
+  <div class="content">
+    <div class="content-inner">
+      <div class="project-layout">
+        <div>
+          <p class="project-intro">This project asked us to explore an issue relevant to our field through a peer-reviewed research lens. Writing this paper pushed me to engage seriously with academic sources, understand how financial literacy is studied empirically, and challenge the assumptions embedded in how people talk about student debt. The FSU library databases were essential resources for locating sources, and the process of building the annotated bibliography helped me understand how individual studies speak to and complicate each other. Through writing this paper, I developed a stronger ability to synthesize multiple scholarly perspectives into a cohesive argument.</p>
+          <div class="project-excerpt">
+            The common perception of college-age individuals is to view them as bad with money. However, when we examine this issue through peer-reviewed research, it loses a lot of its appeal. College student financial troubles occur for many reasons other than laziness or immaturity; there are objective gaps in the student's financial literacy, psychological influences on the student's behaviour, and differences between objective and subjective knowledge about finances.
+          </div>
+          <!-- TO LINK YOUR PAPER: replace # with the path or URL to your document -->
+          <a class="open-btn" href="#">Open document</a>
+        </div>
+        <div class="project-img">
+          <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+            <rect x="6" y="6" width="48" height="68" rx="4" fill="#CEB888" opacity="0.35"/>
+            <rect x="14" y="18" width="32" height="3" rx="1.5" fill="#782F40" opacity="0.45"/>
+            <rect x="14" y="26" width="32" height="3" rx="1.5" fill="#782F40" opacity="0.45"/>
+            <rect x="14" y="34" width="22" height="3" rx="1.5" fill="#782F40" opacity="0.45"/>
+            <rect x="14" y="48" width="32" height="3" rx="1.5" fill="#782F40" opacity="0.45"/>
+            <rect x="14" y="56" width="26" height="3" rx="1.5" fill="#782F40" opacity="0.45"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>©2026 by <span>Ryan Taks</span>. ENC 2135 ePortfolio — Florida State University.</footer>
+</div>
+
+<!-- REFLECTION -->
+<div id="page-reflection" class="page">
+  <div class="reflection-banner">
+    <!-- TO ADD A BANNER PHOTO: <img src="YOUR_BANNER_IMAGE.jpg" alt="Writing"> -->
+    <svg width="160" height="80" viewBox="0 0 160 80" fill="none">
+      <path d="M10 60 Q40 10 80 40 Q120 70 150 20" stroke="#CEB888" stroke-width="2.5" fill="none" opacity="0.5"/>
+      <circle cx="80" cy="40" r="7" fill="#CEB888" opacity="0.4"/>
+      <circle cx="150" cy="20" r="5" fill="#CEB888" opacity="0.3"/>
+      <circle cx="10" cy="60" r="5" fill="#CEB888" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="content">
+    <div class="content-inner reflection-body">
+      <h2>Reflection</h2>
+      <h3>Reflecting on ENC 2135</h3>
+      <p>As my time in Research, Genre, and Context comes to an end, the changes in my writing throughout this course — though sometimes subtle — are clear to me now in a way they weren't at the start. Coming into this class as a freshman, I had a surface-level understanding of what research writing meant. I thought it was mostly about finding sources and citing them correctly. This course showed me how much more is involved.</p>
+      <p>Analyzing genre taught me to look beneath the type of text and think about the rhetorical situation shaping it. A peer-reviewed article and a pamphlet can address the same topic, but the audience, purpose, and design choices make them entirely different genres. Learning to ask why a piece looks and sounds the way it does has changed how I read everything — not just academic writing.</p>
+      <p>Project 1 was the most challenging and rewarding part of the course. Researching college student financial behavior pushed me to engage with real empirical studies and understand how researchers argue with evidence, not just opinion. Building the annotated bibliography was new territory — I had to go beyond summarizing and actually evaluate how each source contributed to a larger scholarly conversation. I also had to reckon with the fact that sources sometimes contradict each other, and that complexity is not a weakness in an argument; it's often its strength.</p>
+      <p>Working on the email to FSU administration as an artifact gave me a different kind of challenge. Taking research-based insights and shaping them for a professional, institutional audience required me to shift my register, sharpen my purpose, and think about what a real reader would need to be persuaded. It reinforced that writing is always shaped by who you're writing for and what you want them to do.</p>
+      <p>In conclusion, this course has pushed me to become a more thoughtful, purposeful writer. I leave ENC 2135 with a better understanding of how research, genre, and audience work together — and with writing skills I know I'll carry into my Political Science coursework and beyond.</p>
+    </div>
+  </div>
+  <footer>©2026 by <span>Ryan Taks</span>. ENC 2135 ePortfolio — Florida State University.</footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Artifact</h3>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+  closeModal();
+}
+
+const modals = {
+  bib: {
+    title: 'Annotated Bibliography — February 2026',
+    body: `
+      <div class="doc-type">Research Writing &middot; ENC 2135</div>
+      <p>This annotated bibliography accompanies Project 1 and evaluates five peer-reviewed sources on college student financial behavior. Each entry summarizes the source's methodology and findings, then explains how it contributes to the paper's central argument: that financial difficulty among students is shaped by literacy gaps, psychological factors, and structural pressures — not simply irresponsibility.</p>
+      <p><strong>Sources cited:</strong> Chen &amp; Volpe; Goetz et al.; Henry, Weber &amp; Yarbrough; Kidwell &amp; Turrisi; Robb &amp; Sharpe; Xiao et al.</p>
+      <p style="font-style:italic;font-size:12px;color:#999;">Full document available via course submission portal.</p>
+    `
+  },
+  email: {
+    title: 'Email to FSU Administration — Spring 2026',
+    body: `
+      <div class="doc-type">Professional Writing &middot; ENC 2135 Artifact</div>
+      <p><strong>To:</strong> FSU Academic Affairs / Student Success Office<br>
+      <strong>From:</strong> Ryan Taks &lt;rat25@fsu.edu&gt;<br>
+      <strong>Subject:</strong> Proposal to Expand Financial Literacy Programming for FSU Students</p>
+      <p>Dear FSU Administration,</p>
+      <p>I am writing as a freshman in ENC 2135 to bring attention to a matter supported by substantial peer-reviewed research: the financial literacy gap among college students is more complex than it appears, and current institutional responses may not be addressing its root causes.</p>
+      <p>Research by Chen and Volpe found that college students answered only 53% of basic personal finance questions correctly — suggesting that financial knowledge gaps are widespread upon college entry. Further studies show that even when knowledge increases, risky borrowing behavior may persist (Robb &amp; Sharpe; Xiao et al.), because psychological factors like perceived control and structural pressures like tuition costs shape behavior independently of what students know.</p>
+      <p>I respectfully propose that FSU consider expanding financial literacy support beyond optional workshops to include: integrated financial education in first-year coursework, accessible one-on-one financial counseling, and peer-led programs that address both knowledge and financial confidence.</p>
+      <p>Thank you for your time and consideration.</p>
+      <p>Sincerely,<br>Ryan Taks<br>Freshman, Political Science<br>rat25@fsu.edu</p>
+    `
+  }
+};
+
+function openModal(key) {
+  const m = modals[key];
+  document.getElementById('modal-title').textContent = m.title;
+  document.getElementById('modal-body').innerHTML = m.body;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+</script>
+</body>
+</html>
